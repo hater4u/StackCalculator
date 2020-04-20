@@ -1,21 +1,21 @@
-import java.util.Stack;
 import java.util.logging.Logger;
+import Exception.*;
 
 import static java.util.logging.Logger.getLogger;
 
 public class Pop implements IOperation {
-    private Stack<Double> stack;
     static Logger logger = getLogger("Logger");
 
     Pop(){}
 
     @Override
     public void action(String[] args, Context context) {
-        stack = context.getStack();
+        if (context.getStackSize() < 1) {
+            throw new StackException();
+        }
 
-        Double value = stack.pop();
+        double value = context.pop();
 
         logger.info("Popped value: " + value);
-        context.setStack(stack);
     }
 }

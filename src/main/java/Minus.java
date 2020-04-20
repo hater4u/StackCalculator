@@ -1,26 +1,26 @@
-import java.util.Stack;
 import java.util.logging.Logger;
 
 import static java.util.logging.Logger.getLogger;
+import Exception.*;
 
 public class Minus implements IOperation{
-    private Stack<Double> stack;
     static Logger logger = getLogger("Logger");
 
     Minus () {}
 
     @Override
     public void action(String[] args, Context context) {
-        stack = context.getStack();
+        double var1, var2, res;
 
-        Double var1, var2, res;
+        if (context.getStackSize() < 2) {
+            throw new StackException();
+        }
 
-        var2 = stack.pop();
-        var1 = stack.pop();
+        var2 = context.pop();
+        var1 = context.pop();
         res = var1 - var2;
 
         logger.info("Subtraction result: " + res);
-        stack.push(res);
-        context.setStack(stack);
+        context.push(res);
     }
 }

@@ -5,8 +5,8 @@ public class Context {
     private TreeMap<String, Double> map;
 
     Context() {
-        stack = new Stack<Double>();
-        map = new TreeMap<String, Double>();
+        stack = new Stack<>();
+        map = new TreeMap<>();
     }
 
     Context(Stack<Double> st, TreeMap<String, Double> mp) {
@@ -14,21 +14,43 @@ public class Context {
         map = mp;
     }
 
-    void setStack (Stack<Double> st) {
-        stack = st;
+//    void setStack (Stack<Double> st) {
+//        stack = st;
+//    }
+//
+//    void setMap(TreeMap<String, Double> mp) {
+//        map = mp;
+//    }
+//
+//    Stack<Double> getStack() {
+//        return stack;
+//    }
+//
+//    TreeMap<String, Double> getMap() {
+//        return map;
+//    }
+
+    void push(Double val) {
+        stack.push(val);
     }
 
-    void setMap(TreeMap<String, Double> mp) {
-        map = mp;
+    Double pop() {
+        return stack.pop();
     }
 
-    Stack<Double> getStack() {
-        return stack;
+    Double peek() {
+        return stack.peek();
     }
 
-    TreeMap<String, Double> getMap() {
-        return map;
+    void put (String str, Double val) {
+        map.put(str, val);
     }
 
+    Double get(String key){
+        return map.get(key);
+    }
 
+    Integer getStackSize() {
+        return stack.size();
+    }
 }
