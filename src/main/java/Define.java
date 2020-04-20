@@ -1,9 +1,11 @@
+import java.util.Stack;
+import java.util.TreeMap;
 import java.util.logging.Logger;
-import Exception.*;
 
 import static java.util.logging.Logger.getLogger;
 
 public class Define implements IOperation {
+    private TreeMap<String, Double> map;
     static Logger logger = getLogger("Logger");
 
     Define () {}
@@ -11,18 +13,16 @@ public class Define implements IOperation {
     @Override
     public void action(String[] args, Context context) {
         String variable;
-        double value;
+        Double value;
 
-        if (args.length < 2) {
-            throw new DefineException();
-        }
-        else {
+//        stack = context.getStack();
+        map = context.getMap();
 
-            variable = args[0];
-            value = Double.parseDouble(args[1]);
+        variable = args[0];
+        value = Double.valueOf(args[1]);
 
-            context.put(variable, value);
-            logger.info("Define successfully: " + variable + " = " + value);
-        }
+        map.put(variable, value);
+        logger.info("Define successfully: " + variable + " = " + value);
+        context.setMap(map);
     }
 }
