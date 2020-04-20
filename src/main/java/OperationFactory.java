@@ -4,6 +4,8 @@ import java.util.Properties;
 import java.util.TreeMap;
 import java.util.logging.Logger;
 
+import Exception.*;
+
 import static java.util.logging.Logger.getLogger;
 
 public class OperationFactory {
@@ -11,7 +13,7 @@ public class OperationFactory {
     private volatile static OperationFactory instance;
     static Logger logger = getLogger("Logger");
 
-    private OperationFactory() throws IOException, ClassNotFoundException {
+    private OperationFactory() throws IOException{
         logger.info("Start create OperationFactory");
 
         Properties properties = new Properties();
@@ -26,7 +28,7 @@ public class OperationFactory {
         logger.info("Successful create");
     }
 
-    public static OperationFactory getInstance() throws IOException, ClassNotFoundException {
+    public static OperationFactory getInstance() throws IOException {
         if (instance == null)
         synchronized (OperationFactory.class)
         {
@@ -44,7 +46,7 @@ public class OperationFactory {
             try {
                 operation = (IOperation) Class.forName(operationName).getDeclaredConstructor().newInstance();
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new FactoryException();
             }
         }
         return operation;

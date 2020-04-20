@@ -1,26 +1,31 @@
-import java.util.Stack;
 import java.util.logging.Logger;
+import Exception.*;
 
 import static java.lang.Math.sqrt;
 import static java.util.logging.Logger.getLogger;
 
 public class Sqrt implements IOperation{
-    private Stack<Double> stack;
     static Logger logger = getLogger("Logger");
 
     Sqrt () {}
 
     @Override
     public void action(String[] args, Context context) {
-        stack = context.getStack();
+        double var, res;
 
-        Double var, res;
+        if (context.getStackSize() < 1) {
+            throw new StackException();
+        }
 
-        var = stack.pop();
-        res = sqrt(var);
+        var = context.pop();
+        if (var < 0) {
+            throw new SqrtException();
+        } else {
+            res = sqrt(var);
 
-        logger.info("Root extraction result: " + res);
-        stack.push(res);
-        context.setStack(stack);
+
+            logger.info("Root extraction result: " + res);
+            context.push(res);
+        }
     }
 }

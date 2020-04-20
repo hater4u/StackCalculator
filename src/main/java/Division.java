@@ -1,27 +1,30 @@
-import java.util.Stack;
-import java.util.TreeMap;
 import java.util.logging.Logger;
+import Exception.*;
 
 import static java.util.logging.Logger.getLogger;
 
 public class Division implements IOperation{
-    private Stack<Double> stack;
     static Logger logger = getLogger("Logger");
 
     Division () {}
 
     @Override
     public void action(String[] args, Context context) {
-        stack = context.getStack();
+        double var1, var2, res;
 
-        Double var1, var2, res;
+        if (context.getStackSize() < 2) {
+            throw new StackException();
+        }
 
-        var2 = stack.pop();
-        var1 = stack.pop();
-        res = var1 / var2;
+        var2 = context.pop();
+        var1 = context.pop();
+        if (var2 == 0.0) {
+            throw new DivisionException();
+        } else {
+            res = var1 / var2;
 
-        logger.info("Division result: " + res);
-        stack.push(res);
-        context.setStack(stack);
+            logger.info("Division result: " + res);
+            context.push(res);
+        }
     }
 }

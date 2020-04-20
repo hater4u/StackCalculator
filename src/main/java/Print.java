@@ -1,19 +1,20 @@
-import java.util.Stack;
 import java.util.logging.Logger;
+import Exception.*;
 
 import static java.util.logging.Logger.getLogger;
 
 public class Print implements IOperation {
-    private Stack<Double> stack;
     static Logger logger = getLogger("Logger");
 
     Print(){}
 
     @Override
     public void action(String[] args, Context context) {
-        stack = context.getStack();
+        if (context.getStackSize() < 2) {
+            throw new StackException();
+        }
 
-        System.out.println(stack.peek());
+        System.out.println(context.peek());
         logger.info("Printed successfully");
     }
 }
