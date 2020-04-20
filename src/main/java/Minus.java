@@ -1,7 +1,11 @@
 import java.util.Stack;
+import java.util.logging.Logger;
+
+import static java.util.logging.Logger.getLogger;
 
 public class Minus implements IOperation{
     private Stack<Double> stack;
+    static Logger logger = getLogger("Logger");
 
     Minus () {}
 
@@ -15,6 +19,7 @@ public class Minus implements IOperation{
         var1 = stack.pop();
         res = var1 - var2;
 
+        logger.info("Subtraction result: " + res);
         stack.push(res);
         context.setStack(stack);
     }

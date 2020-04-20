@@ -1,8 +1,12 @@
 import java.util.Stack;
 import java.util.TreeMap;
+import java.util.logging.Logger;
+
+import static java.util.logging.Logger.getLogger;
 
 public class Division implements IOperation{
     private Stack<Double> stack;
+    static Logger logger = getLogger("Logger");
 
     Division () {}
 
@@ -16,6 +20,7 @@ public class Division implements IOperation{
         var1 = stack.pop();
         res = var1 / var2;
 
+        logger.info("Division result: " + res);
         stack.push(res);
         context.setStack(stack);
     }

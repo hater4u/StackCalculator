@@ -1,9 +1,13 @@
 import java.util.Stack;
 import java.util.TreeMap;
+import java.util.logging.Logger;
+
+import static java.util.logging.Logger.getLogger;
 
 public class Push implements IOperation {
     private Stack<Double> stack;
     private TreeMap<String,Double> map;
+    static Logger logger = getLogger("Logger");
 
     Push () {}
 
@@ -11,14 +15,16 @@ public class Push implements IOperation {
     public void action(String[] args, Context context) {
         stack = context.getStack();
         map = context.getMap();
+        Double value;
 
         if (map.get(args[0]) == null) {
-            stack.push(Double.valueOf(args[0]));
+            value = stack.push(Double.valueOf(args[0]));
         }
         else {
-            stack.push(map.get(args[0]));
+            value = stack.push(map.get(args[0]));
         }
 
+        logger.info("Pushed value: " + value);
         context.setStack(stack);
     }
 }
