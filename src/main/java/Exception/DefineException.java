@@ -1,7 +1,7 @@
 package Exception;
 
 public class DefineException extends CalculatorException{
-    DefineException() {
-        super("Bad arguments");
+    public DefineException() {
+        super("Invalid second argument");
     }
 }

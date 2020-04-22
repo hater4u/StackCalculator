@@ -9,17 +9,26 @@ public class Push implements IOperation {
     Push () {}
 
     @Override
-    public void action(String[] args, Context context) {
+    public void action(String[] args, Context context) throws CalculatorException{
         double value;
 
-        try {
-            value = Double.parseDouble(args[0]);
+        if (args.length < 1) {
+            throw new IllegalArgumentException();
         }
-        catch (NumberFormatException e){
-            value = context.get(args[0]);
-        }
+        else {
+            try {
+                value = Double.parseDouble(args[0]);
+            } catch (NumberFormatException e) {
+                try {
+                    value = context.get(args[0]);
+                }
+                catch (NullPointerException ex) {
+                    throw new PushException();
+                }
+            }
 
-        context.push(value);
-        logger.info("Pushed value: " + value);
+            context.push(value);
+            logger.info("Pushed value: " + value);
+        }
     }
 }

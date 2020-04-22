@@ -1,7 +1,6 @@
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-import java.util.TreeMap;
 import java.util.logging.Logger;
 
 import Exception.*;
@@ -9,20 +8,15 @@ import Exception.*;
 import static java.util.logging.Logger.getLogger;
 
 public class OperationFactory {
-    private TreeMap <String, IOperation> operationMap = new TreeMap<>();
     private volatile static OperationFactory instance;
+    private Properties properties = new Properties();
     static Logger logger = getLogger("Logger");
 
     private OperationFactory() throws IOException{
         logger.info("Start create OperationFactory");
 
-        Properties properties = new Properties();
         InputStream conf = getClass().getResourceAsStream("config.properties");
         properties.load(conf);
-
-        for (String key : properties.stringPropertyNames()) {
-            operationMap.put(key , createOperation(properties.getProperty(key)));
-        }
         conf.close();
 
         logger.info("Successful create");
@@ -39,16 +33,16 @@ public class OperationFactory {
         return instance;
     }
 
-    IOperation createOperation(String operationName)  {
-        IOperation operation = operationMap.get(operationName);
+    IOperation createOperation(String operationName) throws FactoryException {
+        IOperation operation;
 
-        if (operationMap.get(operationName) == null) {
-            try {
-                operation = (IOperation) Class.forName(operationName).getDeclaredConstructor().newInstance();
-            } catch (Exception e) {
-                throw new FactoryException();
-            }
+        try {
+            operation = (IOperation) Class.forName(properties.getProperty(operationName)).getDeclaredConstructor().newInstance();
         }
+        catch (Exception e) {
+            throw new FactoryException();
+        }
+
         return operation;
     }
 }

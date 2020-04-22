@@ -9,7 +9,7 @@ public class Pop implements IOperation {
     Pop(){}
 
     @Override
-    public void action(String[] args, Context context) {
+    public void action(String[] args, Context context) throws CalculatorException{
         if (context.getStackSize() < 1) {
             throw new StackException();
         }

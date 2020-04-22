@@ -2,6 +2,6 @@ package Exception;
 
 public class FactoryException extends CalculatorException{
     public FactoryException() {
-        super("Factory error");
+        super("Command not found");
     }
 }

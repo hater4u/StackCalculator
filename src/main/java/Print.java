@@ -9,8 +9,8 @@ public class Print implements IOperation {
     Print(){}
 
     @Override
-    public void action(String[] args, Context context) {
-        if (context.getStackSize() < 2) {
+    public void action(String[] args, Context context) throws CalculatorException{
+        if (context.getStackSize() < 1) {
             throw new StackException();
         }
 

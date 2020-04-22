@@ -9,7 +9,7 @@ public class Division implements IOperation{
     Division () {}
 
     @Override
-    public void action(String[] args, Context context) {
+    public void action(String[] args, Context context) throws CalculatorException{
         double var1, var2, res;
 
         if (context.getStackSize() < 2) {

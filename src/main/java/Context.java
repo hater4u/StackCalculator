@@ -9,11 +9,6 @@ public class Context {
         map = new TreeMap<>();
     }
 
-    Context(Stack<Double> st, TreeMap<String, Double> mp) {
-        stack = st;
-        map = mp;
-    }
-
 //    void setStack (Stack<Double> st) {
 //        stack = st;
 //    }

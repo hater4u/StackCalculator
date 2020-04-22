@@ -1,4 +1,5 @@
 import java.io.*;
+import Exception.*;
 import java.util.logging.Logger;
 
 import static java.util.logging.Logger.getLogger;
@@ -9,33 +10,27 @@ public class Calculator {
 
     public Calculator() {}
 
-    public void calculate(String filename) throws IOException, ClassNotFoundException {
-        if (filename == null) {
-            logger.info("Start calculate from System.in");
-            calculate(System.in);
-        }
-        else {
+    public void calculate(String filename) throws IOException, CalculatorException {
             logger.info("Start calculate from file: " + filename);
-            calculate(getClass().getResourceAsStream(filename));
-        }
+            calculate(new FileInputStream(filename));
     }
 
-    public void calculate(InputStream is) throws IOException, ClassNotFoundException {
+    public void calculate(InputStream is) throws IOException, CalculatorException {
         OperationFactory operationFactory = OperationFactory.getInstance();
 
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         String line;
         String[] words;
-        String[] args = new String[10];
+        String[] args;
         while ((line = reader.readLine()) != null) {
             if (line.charAt(0) != '#') {
-                words = line.split("[^0-9a-zA-z]+");
-                StringBuilder arguments = new StringBuilder();
-                for (int it = 1; it < words.length; it++){
-                    args[it - 1] = words[it];
+                words = line.split("\\s+");
+                args = new String[words.length - 1];
+                if (words.length - 1 >= 0) {
+                    System.arraycopy(words, 1, args, 0, words.length - 1);
+                    operationFactory.createOperation(words[0]).action(args, context);
                 }
-                operationFactory.createOperation(words[0]).action(args, context);
             }
         }
         logger.info("Calculate end successfully");

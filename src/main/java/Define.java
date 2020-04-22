@@ -9,17 +9,22 @@ public class Define implements IOperation {
     Define () {}
 
     @Override
-    public void action(String[] args, Context context) {
+    public void action(String[] args, Context context) throws CalculatorException{
         String variable;
         double value;
 
         if (args.length < 2) {
-            throw new DefineException();
+            throw new IllegalArgumentException();
         }
         else {
 
             variable = args[0];
-            value = Double.parseDouble(args[1]);
+            try {
+                value = Double.parseDouble(args[1]);
+            }
+            catch (NumberFormatException ex) {
+                throw new DefineException();
+            }
 
             context.put(variable, value);
             logger.info("Define successfully: " + variable + " = " + value);

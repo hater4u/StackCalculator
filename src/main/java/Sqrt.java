@@ -10,7 +10,7 @@ public class Sqrt implements IOperation{
     Sqrt () {}
 
     @Override
-    public void action(String[] args, Context context) {
+    public void action(String[] args, Context context) throws CalculatorException{
         double var, res;
 
         if (context.getStackSize() < 1) {
