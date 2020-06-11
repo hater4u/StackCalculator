@@ -10,6 +10,10 @@ public class Calculator {
 
     public Calculator() {}
 
+    public Calculator(Context context_data) {
+        context = context_data; //only for tests
+    }
+
     public void calculate(String filename) throws IOException, CalculatorException {
             logger.info("Start calculate from file: " + filename);
             calculate(new FileInputStream(filename));
